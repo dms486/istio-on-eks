@@ -40,7 +40,7 @@ locals {
   eks_cluster_version = "1.33"
 
   istio_chart_url     = "https://istio-release.storage.googleapis.com/charts"
-  istio_chart_version = "1.26.0"
+  istio_chart_version = "1.26.2"
 
   tags = {
     Blueprint  = local.name
@@ -190,44 +190,6 @@ module "eks_blueprints_addons" {
       repository    = local.istio_chart_url
       name          = "ztunnel"
       namespace     = kubernetes_namespace_v1.istio_system.metadata[0].name
-    }
-
-    istio-ingress = {
-      chart            = "gateway"
-      chart_version    = local.istio_chart_version
-      repository       = local.istio_chart_url
-      name             = "istio-ingress"
-      namespace        = kubernetes_namespace_v1.istio_ingress.metadata[0].name
-      create_namespace = false
-
-      values = [
-        yamlencode(
-          {
-            nodeSelector = {
-              "karpenter.sh/nodepool" = "system"
-            }
-            tolerations = [
-              {
-                key = "CriticalAddonsOnly"
-                operator = "Exists"
-                effect = "NoSchedule"
-              }
-            ]
-            labels = {
-              istio = "ingressgateway"
-            }
-            service = {
-              loadBalancerClass = "eks.amazonaws.com/nlb"
-              loadBalancerSourceRanges = ["64.98.118.27/32"]
-              annotations = {
-                "service.beta.kubernetes.io/aws-load-balancer-nlb-target-type" = "ip"
-                "service.beta.kubernetes.io/aws-load-balancer-scheme"          = "internet-facing"
-                "service.beta.kubernetes.io/aws-load-balancer-attributes"      = "load_balancing.cross_zone.enabled=true"
-              }
-            }
-          }
-        )
-      ]
     }
   }
 

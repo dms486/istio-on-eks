@@ -1,11 +1,10 @@
-# Amazon EKS Cluster w/ Istio (`Ambient` mode)
+# Amazon EKS Auto Mode Cluster w/ Istio (`Ambient` mode)
 
-This example demonstrates provisioning an EKS cluster with Istio in `Ambient` mode.
+This example demonstrates provisioning an EKS Auto Mode cluster with Istio in `Ambient` mode.
 
-- Deploy an EKS Cluster with one managed node group in a VPC.
+- Deploy an EKS Auto Mode Cluster with one managed node group in a VPC.
 - Add node_security_group rules for port access required for Istio communication.
 - Install Istio in `Ambient` mode using Helm resources in Terraform.
-- Install Istio Ingress Gateway using Helm resources in Terraform. This step deploys a Service of type `LoadBalancer` that creates an AWS Network Load Balancer.
 - Deploy/Validate Istio communication using a sample application.
 
 Refer to the [Istio documentation](https://istio.io/latest/docs/concepts/) for detailed explanations of Istio concepts.
