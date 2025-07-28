@@ -19,12 +19,6 @@ terraform init
 terraform apply --auto-approve
 ```
 
-Once the resources have been provisioned, you will need to replace the `istio-ingress` pods due to a [`istiod` dependency issue](https://github.com/istio/istio/issues/35789). Use the following command to perform a rolling restart of the `istio-ingress` pods:
-
-```sh
-kubectl rollout restart deployment istio-ingress -n istio-ingress
-```
-
 ### Observability Add-ons
 
 Use the following code snippet to add the Istio Observability Add-ons on the EKS
@@ -33,7 +27,7 @@ cluster with deployed Istio.
 ```sh
 for ADDON in kiali jaeger prometheus grafana
 do
-    ADDON_URL="https://raw.githubusercontent.com/istio/istio/release-1.22/samples/addons/$ADDON.yaml"
+    ADDON_URL="https://raw.githubusercontent.com/istio/istio/release-1.26/samples/addons/$ADDON.yaml"
     kubectl apply -f $ADDON_URL
 done
 ```
