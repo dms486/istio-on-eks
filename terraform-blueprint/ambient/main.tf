@@ -37,10 +37,10 @@ locals {
   vpc_cidr = "10.0.0.0/16"
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)
 
-  eks_cluster_version = "1.33"
+  eks_cluster_version = "1.34"
 
   istio_chart_url     = "https://istio-release.storage.googleapis.com/charts"
-  istio_chart_version = "1.26.2"
+  istio_chart_version = "1.28.1"
 
   tags = {
     Blueprint  = local.name
@@ -119,7 +119,7 @@ resource "kubernetes_namespace_v1" "istio_ingress" {
 
 module "eks_blueprints_addons" {
   source  = "aws-ia/eks-blueprints-addons/aws"
-  version = "~> 1.22"
+  version = "~> 1.23"
 
   cluster_name      = module.eks.cluster_name
   cluster_endpoint  = module.eks.cluster_endpoint
@@ -204,7 +204,7 @@ module "eks_blueprints_addons" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 5.0"
+  version = "~> 6.0"
 
   name = local.name
   cidr = local.vpc_cidr
